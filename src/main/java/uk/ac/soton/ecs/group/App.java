@@ -120,8 +120,10 @@ public class App {
                                                                  + "\n\tTraining Number : " + trainingNum
                                                                  + "\n\tTesting Number : " + testingNum);
 
+            GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<String, FImage>(trainingData, trainingNum, 0, testingNum);
+
             System.out.println("Results : ");
-            System.out.println(App.evaluateClassifier(new KNNClassifier(k, tinyImageRes, trainingData), trainingData, trainingNum, testingNum));
+            System.out.println(App.evaluateClassifier(new KNNClassifier(k, tinyImageRes, splits.getTrainingDataset()), splits));
         }
 
         ////////////////////////////////////////
@@ -173,9 +175,8 @@ public class App {
      * @param dataset The dataset the performance of the classifier is being
      * evaluated against.
      */
-    public static String evaluateClassifier(MyClassifier classifier, VFSGroupDataset<FImage> dataset, int trainingNum, int testingNum){
+    public static String evaluateClassifier(MyClassifier classifier, GroupedRandomSplitter<String, FImage> splits){
         // splitting the labelled data into training and testing data
-        GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<String, FImage>(dataset, trainingNum, 0, testingNum);
 
         // creating an evaluator object
         ClassificationEvaluator<CMResult<String>, String, FImage> eval = new ClassificationEvaluator<CMResult<String>, String, FImage>(classifier.getClassifier(), 
