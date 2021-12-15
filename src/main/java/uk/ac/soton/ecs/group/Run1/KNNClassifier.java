@@ -1,10 +1,7 @@
 package uk.ac.soton.ecs.group.Run1;
 
-import java.util.ArrayList;
 
 import org.openimaj.data.dataset.GroupedDataset;
-import org.openimaj.data.dataset.VFSListDataset;
-import org.openimaj.experiment.evaluation.classification.Classifier;
 import org.openimaj.feature.FeatureExtractor;
 import org.openimaj.feature.FloatFV;
 import org.openimaj.feature.FloatFVComparison;
@@ -12,11 +9,10 @@ import org.openimaj.image.FImage;
 import org.openimaj.image.processing.resize.ResizeProcessor;
 import org.openimaj.math.geometry.point.Point2d;
 import org.openimaj.math.geometry.shape.Rectangle;
-import org.openimaj.ml.annotation.ScoredAnnotation;
+import org.openimaj.ml.annotation.Annotator;
 import org.openimaj.ml.annotation.basic.KNNAnnotator;
 
 import uk.ac.soton.ecs.group.MyClassifier;
-import uk.ac.soton.ecs.group.Tuple;
 
 /**
  * COMP3204: Computer Vision
@@ -66,55 +62,11 @@ public class KNNClassifier extends MyClassifier{
         this.knnAnnotator.train(trainingData);
     }
 
-    //////////////
-    // GUESSING //
-    //////////////
-
-    /**
-     * Assigns classifications to the given dataset of images.
-     * 
-     * @param dataset The dataset of images to be classified.
-     * @return A mapping of images to their estimated classification.
-     */
-    public ArrayList<Tuple<String, String>> makeGuesses(VFSListDataset<FImage> dataset){
-        // object to store guesses
-        ArrayList<Tuple<String,String>> guesses = new ArrayList<Tuple<String, String>>();
-
-        // count to keep track of image index
-        int i = 0;
-
-        // iterating through images in dataset
-        for(FImage image : dataset){
-            String bestAnnotation = "";
-            float bestPrediction = 0.0f;
-
-            // finding best annotation for this image
-            for(Object score : this.knnAnnotator.annotate(image)){
-                ScoredAnnotation s = (ScoredAnnotation) score;
-                if(((ScoredAnnotation<?>) score).confidence > bestPrediction){
-                    bestPrediction = ((ScoredAnnotation<?>) score).confidence;
-                    bestAnnotation = ((ScoredAnnotation<?>) score).annotation.toString();
-                }
-            }
-            // getting image name (filename) - ID of the form "testing/<filename>" and we need just <filename>
-            String imageName = dataset.getID(i).split("/")[1];
-
-            // adding guess to guesses list
-            guesses.add(new Tuple<String, String>(imageName, bestAnnotation));
-
-            // incrementing count
-            i++;
-        }
-
-        // returning the guesses
-        return guesses;
-    }
-
     /////////////////////////
     // GETTERS AND SETTERS //
     /////////////////////////
 
-    public Classifier getClassifier(){
+    public Annotator getClassifier(){
         return this.knnAnnotator;
     }
 

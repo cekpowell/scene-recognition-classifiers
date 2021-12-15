@@ -64,7 +64,7 @@ public class App {
         System.out.println("## RUN 1 ##");
         System.out.println();
 
-        App.run1(trainingData, testingData, run1Filename, true);
+        //App.run1(trainingData, testingData, run1Filename, true);
 
         // RUN 2 //
 
@@ -72,7 +72,7 @@ public class App {
         System.out.println("## RUN 2 ##");
         System.out.println();
 
-        App.run2(trainingData, testingData, run2Filename, true);
+        //App.run2(trainingData, testingData, run2Filename, true);
 
         // RUN 3 //
 
@@ -92,7 +92,7 @@ public class App {
      * 
      * @param trainingData The training data for the classifier.
      * @param testingData The testing data for the classifier.
-     * @param outputFile The file the classifications will be written to.
+     * @param outputFilename The file the classifications will be written to.
      * @param evaluate If the classifier should be evaluated or not.
      */
     public static void run1(VFSGroupDataset<FImage> trainingData, VFSListDataset<FImage> testingData, String outputFilename, boolean evaluate) throws Exception{
@@ -120,7 +120,7 @@ public class App {
                                                                  + "\n\tTraining Number : " + trainingNum
                                                                  + "\n\tTesting Number : " + testingNum);
 
-            GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<String, FImage>(trainingData, trainingNum, 0, testingNum);
+            GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<>(trainingData, trainingNum, 0, testingNum);
 
             System.out.println("Results : ");
             System.out.println(App.evaluateClassifier(new KNNClassifier(k, tinyImageRes, splits.getTrainingDataset()), splits));
@@ -138,15 +138,52 @@ public class App {
     ///////////////////////////////
 
     /**
-     * Method to handle the testing and running of the 'Run 1' Classifier.
+     * Method to handle the testing and running of the 'Run 2' Classifier.
      * 
      * @param trainingData The training data for the classifier.
      * @param testingData The testing data for the classifier.
-     * @param outputFile The file the classifications will be written to.
+     * @param outputFilename The file the classifications will be written to.
      * @param evaluate If the classifier should be evaluated or not.
      */
     public static void run2(VFSGroupDataset<FImage> trainingData, VFSListDataset<FImage> testingData, String outputFilename, boolean evaluate) throws Exception{
-        // TODO
+        ////////////////
+        // PARAMETERS //
+        ////////////////
+
+        int k = 2200; /** Value of K in the K-Means Clustering algorithm */
+        int patchSize = 8; /** Size of each DSPP patch */
+        int patchEvery = 4; /** We extract a patch every 4 pixels */
+        int sampleSize = 120;
+        int trainingNum = 80; /** out of 100 per class */
+        int testingNum = 20;  /** out of 100 per class */
+
+        System.out.println("Running LibLinear Classifier with parameters : "
+                + "\n\tk : " + k
+                +  "\n\tpatchSize : " + patchSize
+                +  "\n\tpatchEvery : " + patchEvery
+                +  "\n\tsampleSize : " + sampleSize);
+        System.out.println();
+
+        ///////////////////////////////////////
+        // EVALUATING CLASSIFIER PERFORMANCE //
+        ///////////////////////////////////////
+
+        if(evaluate){
+            System.out.println("Evaluating classifier performance with parameters : "
+                    + "\n\tTraining Number : " + trainingNum
+                    + "\n\tTesting Number : " + testingNum);
+
+            GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<>(trainingData, trainingNum, 0, testingNum);
+
+            System.out.println("Results : ");
+            System.out.println(App.evaluateClassifier(new LibLinearClassifier(splits.getTrainingDataset(), patchSize, patchEvery, k, sampleSize), splits));
+        }
+
+        ////////////////////////////////////////
+        // RUNNING CLASSIFIER ON TESTING DATA //
+        ////////////////////////////////////////
+
+        App.runClassifier(new LibLinearClassifier(trainingData, patchSize, patchEvery, k, sampleSize), testingData, outputFilename);
     }
 
     //////////////////////////////
@@ -154,15 +191,48 @@ public class App {
     //////////////////////////////
 
     /**
-     * Method to handle the testing and running of the 'Run 1' Classifier.
+     * Method to handle the testing and running of the 'Run 3' Classifier.
      * 
      * @param trainingData The training data for the classifier.
      * @param testingData The testing data for the classifier.
-     * @param outputFile The file the classifications will be written to.
+     * @param outputFilename The file the classifications will be written to.
      * @param evaluate If the classifier should be evaluated or not.
      */
     public static void run3(VFSGroupDataset<FImage> trainingData, VFSListDataset<FImage> testingData, String outputFilename, boolean evaluate) throws Exception{
-        // TODO
+        ////////////////
+        // PARAMETERS //
+        ////////////////
+
+        int k = 200; /** Value of K in the K-Means Clustering algorithm */
+        int sampleSize = 120;
+        int trainingNum = 80; /** out of 100 per class */
+        int testingNum = 20;  /** out of 100 per class */
+
+        System.out.println("Running LibLinear Classifier with parameters : "
+                + "\n\tk : " + k
+                +  "\n\tsampleSize : " + sampleSize);
+        System.out.println();
+
+        ///////////////////////////////////////
+        // EVALUATING CLASSIFIER PERFORMANCE //
+        ///////////////////////////////////////
+
+        if(evaluate) {
+            System.out.println("Evaluating classifier performance with parameters : "
+                    + "\n\tTraining Number : " + trainingNum
+                    + "\n\tTesting Number : " + testingNum);
+
+            GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<>(trainingData, trainingNum, 0, testingNum);
+
+            System.out.println("Results : ");
+            System.out.println(App.evaluateClassifier(new NaiveBayesClassifier(splits.getTrainingDataset(), k, sampleSize), splits));
+        }
+
+        ////////////////////////////////////////
+        // RUNNING CLASSIFIER ON TESTING DATA //
+        ////////////////////////////////////////
+
+        App.runClassifier(new NaiveBayesClassifier(trainingData, k, sampleSize), testingData, outputFilename);
     }
 
     ////////////////////
@@ -172,26 +242,18 @@ public class App {
     /**
      * Evaluates the performance of the classifier on the given dataset.
      * 
-     * @param dataset The dataset the performance of the classifier is being
+     * @param splits The splits dataset the performance of the classifier is being
      * evaluated against.
      */
     public static String evaluateClassifier(MyClassifier classifier, GroupedRandomSplitter<String, FImage> splits){
-        // splitting the labelled data into training and testing data
-
         // creating an evaluator object
-        ClassificationEvaluator<CMResult<String>, String, FImage> eval = new ClassificationEvaluator<CMResult<String>, String, FImage>(classifier.getClassifier(), 
-                                                                                                                                       splits.getTestDataset(), 
-                                                                                                                                       new CMAnalyser<FImage, 
-                                                                                                                                       String>(CMAnalyser.Strategy.SINGLE));
+        ClassificationEvaluator<CMResult<String>, String, FImage> eval = new ClassificationEvaluator<>(classifier.getClassifier(),
+                                                                                                       splits.getTestDataset(),
+                                                                                                       new CMAnalyser<FImage, String>(CMAnalyser.Strategy.SINGLE));
 
-        // getting the guesses from the evaluator                                                                                                                            
-        Map<FImage, ClassificationResult<String>> guesses = eval.evaluate();
-
-        // analysing the accuracy of the guesses
-        CMResult<String> result = eval.analyse(guesses);
-        
-        // returning the result of the evaluation
-        return result.toString();
+        Map<FImage, ClassificationResult<String>> guesses = eval.evaluate();  // getting the guesses from the evaluator
+        CMResult<String> result = eval.analyse(guesses); // analysing the accuracy of the guesses
+        return result.toString(); // returning the result of the evaluation
     }
 
     /**
