@@ -1,4 +1,4 @@
-package uk.ac.soton.ecs.cp6g18;
+package uk.ac.soton.ecs.group;
 
 import static org.junit.Assert.*;
 
