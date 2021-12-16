@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * COMP3204: Computer Vision
  * Coursework 3
- * A Densly Sampled Pixel Patches Extractor
+ * 
+ * A Densly Sampled Pixel Patches Feature Extractor.
  *
  * @author Dzhani Daud (dsd1u19)
  * @author Konrad Sobczak (kks1g19)

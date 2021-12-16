@@ -18,7 +18,8 @@ import java.util.List;
 /**
  * COMP3204: Computer Vision
  * Coursework 3
- * A LibLinear Extractor
+ * 
+ * A LibLinear Classifier.
  *
  *  @author Dzhani Daud (dsd1u19)
  *  @author Konrad Sobczak (kks1g19)

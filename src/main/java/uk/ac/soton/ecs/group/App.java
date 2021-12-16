@@ -20,6 +20,9 @@ import uk.ac.soton.ecs.group.Run2.*;
 import uk.ac.soton.ecs.group.Run3.*;
 
 /**
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * 
  * Application to test and run the classifiers.
  * 
  * @author Charles Powell (cp6g18)
@@ -156,7 +159,7 @@ public class App {
         // PARAMETERS //
         ////////////////
 
-        int k = 2200; /** Value of K in the K-Means Clustering algorithm */
+        int k = 1200; /** Value of K in the K-Means Clustering algorithm */
         int patchSize = 8; /** Size of each DSPP patch */
         int patchEvery = 4; /** We extract a patch every 4 pixels */
         int sampleSize = 120;
@@ -210,7 +213,7 @@ public class App {
         // PARAMETERS //
         ////////////////
 
-        int k = 200; /** Value of K in the K-Means Clustering algorithm */
+        int k = 150; /** Value of K in the K-Means Clustering algorithm */
         int sampleSize = 120;
         int trainingNum = 80; /** out of 100 per class */
         int testingNum = 20;  /** out of 100 per class */

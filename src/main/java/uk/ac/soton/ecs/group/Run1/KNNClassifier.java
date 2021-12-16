@@ -14,6 +14,7 @@ import uk.ac.soton.ecs.group.MyClassifier;
 /**
  * COMP3204: Computer Vision
  * Coursework 3
+ * 
  * A K-Nearest Neighbour Classifier using the "tiny image" feature.
  * 
  * @author Charles Powell (cp6g18)

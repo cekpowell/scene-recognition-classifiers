@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * COMP3204: Computer Vision
  * Coursework 3
+ * 
  * A Naive Bayes Classifier
  *
  * @author Dzhem Kavak (dtk1u19)

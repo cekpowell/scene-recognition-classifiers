@@ -13,6 +13,7 @@ import org.openimaj.util.pair.IntFloatPair;
 /**
  * COMP3204: Computer Vision
  * Coursework 3
+ * 
  * A Pyramid Histogram of Words Extractor
  *
  * @author Dzhem Kavak (dtk1u19)

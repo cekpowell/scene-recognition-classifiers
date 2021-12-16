@@ -8,6 +8,9 @@ import org.openimaj.math.geometry.point.Point2d;
 import org.openimaj.math.geometry.shape.Rectangle;
 
 /**
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * 
  * Tiny Image Feature Extractor.
  * 
  * Extracts an feature vector equal to the tiny image representation

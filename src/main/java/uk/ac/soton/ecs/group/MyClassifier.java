@@ -10,6 +10,9 @@ import org.openimaj.ml.annotation.ScoredAnnotation;
 
 
 /**
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * 
  * Parent class to define the structure of the individual classifiers.
  * 
  * @author Charles Powell (cp6g18)
