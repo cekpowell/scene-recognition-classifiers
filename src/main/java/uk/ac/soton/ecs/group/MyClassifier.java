@@ -13,6 +13,7 @@ import org.openimaj.ml.annotation.ScoredAnnotation;
  * Parent class to define the structure of the individual classifiers.
  * 
  * @author Charles Powell (cp6g18)
+ * @author Dzhani Daud (dsd1u19)
  */
 public abstract class MyClassifier {
     
@@ -21,9 +22,9 @@ public abstract class MyClassifier {
     //////////////
 
     /**
-     * Fits the KNN Annotator to the given training data.
+     * Fits the classifier to the given training data.
      * 
-     * @param trainingData The training data the KNN Annotator will
+     * @param trainingData The training data the classifier will
      * be fit to.
      */
     public abstract void fit(GroupedDataset trainingData);

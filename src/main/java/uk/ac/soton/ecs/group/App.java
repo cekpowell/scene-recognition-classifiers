@@ -23,6 +23,7 @@ import uk.ac.soton.ecs.group.Run3.*;
  * Application to test and run the classifiers.
  * 
  * @author Charles Powell (cp6g18)
+ * @author Dzhani Daud (dsd1u19)
  */
 public class App {
     
@@ -57,6 +58,10 @@ public class App {
         /////////////////////////
         // RUNNING CLASSIFIERS //
         /////////////////////////
+
+        /**
+         * Comment out 'App.runX() calls to run only certain classifiers.'
+         */
 
         // RUN 1 //
 
@@ -107,8 +112,8 @@ public class App {
         int testingNum = 30;  /** out of 100 per class */
 
         System.out.println("Running KNN Classifier with parameters : " 
-                                                                     + "\n\tk : " + k 
-                                                                     +  "\n\tTiny Image Resolution : " + tinyImageRes);
+                            + "\n\tk : " + k 
+                            +  "\n\tTiny Image Resolution : " + tinyImageRes);
         System.out.println();
 
         ///////////////////////////////////////
@@ -146,6 +151,7 @@ public class App {
      * @param evaluate If the classifier should be evaluated or not.
      */
     public static void run2(VFSGroupDataset<FImage> trainingData, VFSListDataset<FImage> testingData, String outputFilename, boolean evaluate) throws Exception{
+        
         ////////////////
         // PARAMETERS //
         ////////////////
@@ -158,10 +164,10 @@ public class App {
         int testingNum = 20;  /** out of 100 per class */
 
         System.out.println("Running LibLinear Classifier with parameters : "
-                + "\n\tk : " + k
-                +  "\n\tpatchSize : " + patchSize
-                +  "\n\tpatchEvery : " + patchEvery
-                +  "\n\tsampleSize : " + sampleSize);
+                            + "\n\tk : " + k
+                            +  "\n\tpatchSize : " + patchSize
+                            +  "\n\tpatchEvery : " + patchEvery
+                            +  "\n\tsampleSize : " + sampleSize);
         System.out.println();
 
         ///////////////////////////////////////
@@ -199,6 +205,7 @@ public class App {
      * @param evaluate If the classifier should be evaluated or not.
      */
     public static void run3(VFSGroupDataset<FImage> trainingData, VFSListDataset<FImage> testingData, String outputFilename, boolean evaluate) throws Exception{
+        
         ////////////////
         // PARAMETERS //
         ////////////////
