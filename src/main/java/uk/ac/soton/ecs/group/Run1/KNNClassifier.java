@@ -6,9 +6,6 @@ import org.openimaj.feature.FeatureExtractor;
 import org.openimaj.feature.FloatFV;
 import org.openimaj.feature.FloatFVComparison;
 import org.openimaj.image.FImage;
-import org.openimaj.image.processing.resize.ResizeProcessor;
-import org.openimaj.math.geometry.point.Point2d;
-import org.openimaj.math.geometry.shape.Rectangle;
 import org.openimaj.ml.annotation.Annotator;
 import org.openimaj.ml.annotation.basic.KNNAnnotator;
 
@@ -58,6 +55,7 @@ public class KNNClassifier extends MyClassifier{
      * @param trainingData The training data the KNN Annotator will
      * be fit to.
      */
+    @Override
     public void fit(GroupedDataset trainingData){
         this.knnAnnotator.train(trainingData);
     }
@@ -66,6 +64,7 @@ public class KNNClassifier extends MyClassifier{
     // GETTERS AND SETTERS //
     /////////////////////////
 
+    @Override
     public Annotator getClassifier(){
         return this.knnAnnotator;
     }

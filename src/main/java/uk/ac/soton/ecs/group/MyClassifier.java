@@ -10,7 +10,7 @@ import org.openimaj.ml.annotation.ScoredAnnotation;
 
 
 /**
- * Parent class to define the structure of the project's classifiers.
+ * Parent class to define the structure of the individual classifiers.
  * 
  * @author Charles Powell (cp6g18)
  */

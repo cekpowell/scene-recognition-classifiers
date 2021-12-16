@@ -15,13 +15,33 @@ import uk.ac.soton.ecs.group.MyClassifier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * @author
+ */
 public class LibLinearClassifier extends MyClassifier {
+
+    // member variables
     private final DSPPExtractor extractor;
     private final LiblinearAnnotator<FImage, String> annotator;
     private final int K;
     private final int patchSize;
     private final int patchEvery;
 
+    //////////////////
+    // INITIALIZING //
+    //////////////////
+
+    /**
+     * Class constructor.
+     * 
+     * @param trainingData
+     * @param patchSize
+     * @param patchEvery
+     * @param K
+     * @param sampleSize
+     */
     public LibLinearClassifier(GroupedDataset trainingData, int patchSize, int patchEvery, int K, int sampleSize) {
         this.K = K;
         this.patchSize = patchSize;
@@ -34,17 +54,28 @@ public class LibLinearClassifier extends MyClassifier {
         this.fit(trainingData);
     }
 
+    //////////////
+    // TRAINING //
+    //////////////
+
+    /**
+     * Fits the Linear Classifier to the given training data.
+     * 
+     * @param trainingData The training data the Linear Classifier will
+     * be fit to.
+     */
     @Override
     public void fit(GroupedDataset trainingData) {
         this.annotator.train(trainingData);
     }
 
-    @Override
-    public Annotator getClassifier() {
-        return this.annotator;
-    }
 
-
+    /**
+     * 
+     * 
+     * @param sample
+     * @return
+     */
     private HardAssigner<double[], double[], IntDoublePair> trainQuantiser(Dataset<FImage> sample) {
         List<double[]> allkeys = new ArrayList<>();
         for (FImage img : sample) allkeys.addAll(DSPPExtractor.getPatches(img, patchSize, patchEvery));
@@ -55,4 +86,12 @@ public class LibLinearClassifier extends MyClassifier {
         return result.defaultHardAssigner();
     }
 
+    //////////////////////////
+    // GETTERS AND SETTERS  //
+    //////////////////////////
+
+    @Override
+    public Annotator getClassifier() {
+        return this.annotator;
+    }
 }

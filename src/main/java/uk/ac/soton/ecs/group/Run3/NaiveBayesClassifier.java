@@ -4,17 +4,12 @@ import org.openimaj.data.DataSource;
 import org.openimaj.data.dataset.Dataset;
 import org.openimaj.data.dataset.GroupedDataset;
 import org.openimaj.experiment.dataset.sampling.GroupedUniformRandomisedSampler;
-import org.openimaj.feature.DoubleFV;
-import org.openimaj.feature.FeatureExtractor;
-import org.openimaj.feature.SparseIntFV;
 import org.openimaj.feature.local.data.LocalFeatureListDataSource;
 import org.openimaj.feature.local.list.LocalFeatureList;
 import org.openimaj.image.FImage;
 import org.openimaj.image.feature.dense.gradient.dsift.ByteDSIFTKeypoint;
 import org.openimaj.image.feature.dense.gradient.dsift.DenseSIFT;
 import org.openimaj.image.feature.dense.gradient.dsift.PyramidDenseSIFT;
-import org.openimaj.image.feature.local.aggregate.BagOfVisualWords;
-import org.openimaj.image.feature.local.aggregate.PyramidSpatialAggregator;
 import org.openimaj.ml.annotation.Annotator;
 import org.openimaj.ml.annotation.bayes.NaiveBayesAnnotator;
 import org.openimaj.ml.clustering.ByteCentroidsResult;
@@ -26,11 +21,29 @@ import uk.ac.soton.ecs.group.MyClassifier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * @author
+ */
 public class NaiveBayesClassifier extends MyClassifier {
+
+    // member variables
     private final PHOWExtractor extractor;
     private final NaiveBayesAnnotator annotator;
     private final int K;
 
+    //////////////////
+    // INITIALIZING //
+    //////////////////
+
+    /**
+     * Class constructor.
+     * 
+     * @param trainingData
+     * @param K
+     * @param sampleSize
+     */
     public NaiveBayesClassifier(GroupedDataset trainingData, int K, int sampleSize) {
         this.K = K;
 
@@ -43,18 +56,30 @@ public class NaiveBayesClassifier extends MyClassifier {
         this.fit(trainingData);
     }
 
+    //////////////
+    // TRAINING //
+    //////////////
+
+    /**
+     * Fits the Naive Bayes classifier to the given training data.
+     * 
+     * @param trainingData The training data the Naive Bayes classifier will
+     * be fit to.
+     */
     @Override
     public void fit(GroupedDataset trainingData) {
         this.annotator.train(trainingData);
     }
 
-    @Override
-    public Annotator getClassifier() {
-        return this.annotator;
-    }
-
+    /**
+     * 
+     * 
+     * @param sample
+     * @param pdsift
+     * @return
+     */
     private HardAssigner<byte[], float[], IntFloatPair> trainQuantiser(
-            Dataset<FImage> sample, PyramidDenseSIFT<FImage> pdsift) {
+        Dataset<FImage> sample, PyramidDenseSIFT<FImage> pdsift) {
         List<LocalFeatureList<ByteDSIFTKeypoint>> allkeys = new ArrayList<>();
 
         for (FImage img : sample) {
@@ -67,25 +92,14 @@ public class NaiveBayesClassifier extends MyClassifier {
         ByteCentroidsResult result = km.cluster(datasource);
 
         return result.defaultHardAssigner();
-    }
+    }   
 
-    private static class PHOWExtractor implements FeatureExtractor<DoubleFV, FImage> {
-        PyramidDenseSIFT<FImage> pdsift;
-        HardAssigner<byte[], float[], IntFloatPair> assigner;
+    /////////////////////////
+    // GETTERS AND SETTERS //
+    /////////////////////////
 
-        public PHOWExtractor(
-                PyramidDenseSIFT<FImage> pdsift, HardAssigner<byte[], float[], IntFloatPair> assigner) {
-            this.pdsift = pdsift;
-            this.assigner = assigner;
-        }
-
-        public DoubleFV extractFeature(FImage image) {
-            pdsift.analyseImage(image);
-
-            BagOfVisualWords<byte[]> bovw = new BagOfVisualWords<>(assigner);
-            PyramidSpatialAggregator<byte[], SparseIntFV> spatial = new PyramidSpatialAggregator<>(bovw, 2, 4);
-
-            return spatial.aggregate(pdsift.getByteKeypoints(0.015f), image.getBounds()).normaliseFV();
-        }
+    @Override
+    public Annotator getClassifier() {
+        return this.annotator;
     }
 }

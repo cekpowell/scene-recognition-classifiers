@@ -11,37 +11,57 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author
+ */
 class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
+
+    // member variables
     private final HardAssigner<double[], double[], IntDoublePair> assigner;
     private final int patchSize;
     private final int patchEvery;
 
+    //////////////////
+    // INITIALIZING //
+    //////////////////
+
+    /**
+     * 
+     * 
+     * @param assigner
+     * @param patchSize
+     * @param patchEvery
+     */
     public DSPPExtractor(HardAssigner<double[], double[], IntDoublePair> assigner, int patchSize, int patchEvery) {
         this.assigner = assigner;
         this.patchSize = patchSize;
         this.patchEvery = patchEvery;
     }
 
+    ////////////////////////
+    // FEATURE EXTRACTION //
+    ////////////////////////
+
+    /**
+     * 
+     * 
+     * @param image
+     * @return
+     */
     public DoubleFV extractFeature(FImage image) {
         BagOfVisualWords<double[]> bovw = new BagOfVisualWords<>(assigner);
         return bovw.aggregateVectorsRaw(getPatches(image, patchSize, patchEvery)).asDoubleFV();
     }
 
-    public static double[] normaliseAndMeanCenter(double[] vector) {
-        double length = 0;
-        double mean = 0;
-        for(double val : vector) mean += val;
-        mean /= vector.length;
-
-        for (int i=0; i< vector.length; i++) {
-            vector[i] -= mean;
-            length += Math.pow(vector[i], 2);
-        }
-        length = Math.sqrt(length);
-        for (int i=0; i< vector.length; i++) vector[i] /= length;
-        return vector;
-    }
-
+    /**
+     * 
+     * 
+     * @param image
+     * @param patchSize
+     * @param sampleEvery
+     * @return
+     */
     public static List<double[]> getPatches(FImage image, int patchSize, int sampleEvery) {
         List<double[]> features = new ArrayList<>();
 
@@ -67,5 +87,30 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
             }
         }
         return features;
+    }
+
+    ////////////////////
+    // HELPER METHODS //
+    ////////////////////
+
+    /**
+     * 
+     * 
+     * @param vector
+     * @return
+     */
+    public static double[] normaliseAndMeanCenter(double[] vector) {
+        double length = 0;
+        double mean = 0;
+        for(double val : vector) mean += val;
+        mean /= vector.length;
+
+        for (int i=0; i< vector.length; i++) {
+            vector[i] -= mean;
+            length += Math.pow(vector[i], 2);
+        }
+        length = Math.sqrt(length);
+        for (int i=0; i< vector.length; i++) vector[i] /= length;
+        return vector;
     }
 }
