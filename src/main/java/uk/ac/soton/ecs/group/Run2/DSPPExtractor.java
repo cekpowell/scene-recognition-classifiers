@@ -12,8 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * @author
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * A Densly Sampled Pixel Patches Extractor
+ *
+ * @author Dzhani Daud (dsd1u19)
+ * @author Konrad Sobczak (kks1g19)
  */
 class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
 
@@ -27,11 +31,11 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
     //////////////////
 
     /**
+     * Class constructor.
      * 
-     * 
-     * @param assigner
-     * @param patchSize
-     * @param patchEvery
+     * @param assigner the assigner used for BOVW
+     * @param patchSize the patch size
+     * @param patchEvery distance between patches
      */
     public DSPPExtractor(HardAssigner<double[], double[], IntDoublePair> assigner, int patchSize, int patchEvery) {
         this.assigner = assigner;
@@ -44,10 +48,11 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
     ////////////////////////
 
     /**
+     * Extract the features using Bag Of Visual Words
      * 
-     * 
-     * @param image
-     * @return
+     * @param image the image of which the features have to be extracted.
+     *
+     * @return The extracted features
      */
     public DoubleFV extractFeature(FImage image) {
         BagOfVisualWords<double[]> bovw = new BagOfVisualWords<>(assigner);
@@ -55,12 +60,13 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
     }
 
     /**
+     * Get the patches out of an image
      * 
-     * 
-     * @param image
-     * @param patchSize
-     * @param sampleEvery
-     * @return
+     * @param image image from which to get the patches.
+     * @param patchSize the patch size.
+     * @param sampleEvery distance between patches.
+     *
+     * @return list of patches
      */
     public static List<double[]> getPatches(FImage image, int patchSize, int sampleEvery) {
         List<double[]> features = new ArrayList<>();
@@ -69,6 +75,8 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
         final int patchesHeight = (int) Math.floor((image.getHeight() - patchSize) / sampleEvery) + 1;
 
         FImage[][] patches = new FImage[patchesWidth][patchesHeight];
+
+        //loop over the patches
         for (int row = 0; row < patches.length; row++) {
             for (int col = 0; col < patches[row].length; col++) {
                 Point bottomRight = new Point(row * sampleEvery + patchSize, col * sampleEvery + patchSize);
@@ -94,10 +102,11 @@ class DSPPExtractor implements FeatureExtractor<DoubleFV, FImage> {
     ////////////////////
 
     /**
+     * Normalise and mean center a vector.
      * 
-     * 
-     * @param vector
-     * @return
+     * @param vector vector to be mean centered and normalised.
+     *
+     * @return normalised vector.
      */
     public static double[] normaliseAndMeanCenter(double[] vector) {
         double length = 0;

@@ -37,8 +37,9 @@ public class TinyImageFeatureExtractor implements FeatureExtractor<FloatFV, FIma
      * to the given resolution and concatenates the rows of the image into 
      * a single vector.
      * 
-     * @param FImage The image for which the "tiny image" feature is being
+     * @param image The image for which the "tiny image" feature is being
      * extracted.
+     * @return The extracted features
      */
     @Override
     public FloatFV extractFeature(FImage image) {

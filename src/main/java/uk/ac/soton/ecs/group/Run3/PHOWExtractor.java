@@ -11,8 +11,13 @@ import org.openimaj.ml.clustering.assignment.HardAssigner;
 import org.openimaj.util.pair.IntFloatPair;
 
 /**
- * 
- * @author
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * A Pyramid Histogram of Words Extractor
+ *
+ * @author Dzhem Kavak (dtk1u19)
+ * @author Velimir Anastasov (vna1u19)
+ * @author Konrad Sobczak (kks1g19)
  */
 public class PHOWExtractor implements FeatureExtractor<DoubleFV, FImage> {
 
@@ -27,8 +32,8 @@ public class PHOWExtractor implements FeatureExtractor<DoubleFV, FImage> {
     /**
      * Class constructor.
      * 
-     * @param pdsift
-     * @param assigner
+     * @param pdsift pyramid dense shift
+     * @param assigner hard assigner
      */
     public PHOWExtractor(
             PyramidDenseSIFT<FImage> pdsift, HardAssigner<byte[], float[], IntFloatPair> assigner) {
@@ -41,10 +46,10 @@ public class PHOWExtractor implements FeatureExtractor<DoubleFV, FImage> {
     ////////////////////////
 
     /**
-     * 
-     * 
-     * @param image
-     * @return 
+     * Extract the features using BOVW and Pyramid Spatial Aggregator
+     *
+     * @param image the image of which the features have to be extracted.
+     * @return The extracted features
      */
     public DoubleFV extractFeature(FImage image) {
         pdsift.analyseImage(image);

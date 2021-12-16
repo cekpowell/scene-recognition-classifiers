@@ -13,18 +13,16 @@ import uk.ac.soton.ecs.group.MyClassifier;
 
 /**
  * COMP3204: Computer Vision
- * 
  * Coursework 3
- * 
  * A K-Nearest Neighbour Classifier using the "tiny image" feature.
  * 
  * @author Charles Powell (cp6g18)
  */
-public class KNNClassifier extends MyClassifier{
+public class KNNClassifier extends MyClassifier {
 
     // member variables
-    private int k;
-    private KNNAnnotator knnAnnotator;
+    private final int k;
+    private final KNNAnnotator knnAnnotator;
 
     //////////////////
     // INITIALIZING //
@@ -34,9 +32,10 @@ public class KNNClassifier extends MyClassifier{
      * Class constructor.
      * 
      * @param k The value of K for the K-Nearest Neighbour Classification
+     * @param tinyImageRes the resolution of "tiny images"
+     * @param trainingDataset the training dataset
      */
-    public KNNClassifier(int k, int tinyImageRes, GroupedDataset trainingDataset){
-        // initializing
+    public KNNClassifier(int k, int tinyImageRes, GroupedDataset trainingDataset) {
         this.k = k;
         FeatureExtractor<FloatFV, FImage> tinyImageExtractor = new TinyImageFeatureExtractor(tinyImageRes);
         this.knnAnnotator = KNNAnnotator.create(tinyImageExtractor, FloatFVComparison.EUCLIDEAN, this.k);

@@ -16,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * 
- * @author
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * A LibLinear Extractor
+ *
+ *  @author Dzhani Daud (dsd1u19)
+ *  @author Konrad Sobczak (kks1g19)
  */
 public class LibLinearClassifier extends MyClassifier {
 
@@ -36,11 +39,11 @@ public class LibLinearClassifier extends MyClassifier {
     /**
      * Class constructor.
      * 
-     * @param trainingData
-     * @param patchSize
-     * @param patchEvery
-     * @param K
-     * @param sampleSize
+     * @param trainingData the training dataset
+     * @param patchSize the patch size
+     * @param patchEvery distance between patches
+     * @param K number of clusters
+     * @param sampleSize the sample size
      */
     public LibLinearClassifier(GroupedDataset trainingData, int patchSize, int patchEvery, int K, int sampleSize) {
         this.K = K;
@@ -71,10 +74,10 @@ public class LibLinearClassifier extends MyClassifier {
 
 
     /**
+     * Run training on a dataset
      * 
-     * 
-     * @param sample
-     * @return
+     * @param sample sample dataset
+     * @return the HardAssigner of the result
      */
     private HardAssigner<double[], double[], IntDoublePair> trainQuantiser(Dataset<FImage> sample) {
         List<double[]> allkeys = new ArrayList<>();

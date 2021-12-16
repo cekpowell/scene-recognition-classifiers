@@ -69,7 +69,7 @@ public class App {
         System.out.println("## RUN 1 ##");
         System.out.println();
 
-        //App.run1(trainingData, testingData, run1Filename, true);
+        App.run1(trainingData, testingData, run1Filename, true);
 
         // RUN 2 //
 
@@ -77,7 +77,7 @@ public class App {
         System.out.println("## RUN 2 ##");
         System.out.println();
 
-        //App.run2(trainingData, testingData, run2Filename, true);
+        App.run2(trainingData, testingData, run2Filename, true);
 
         // RUN 3 //
 

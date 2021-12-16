@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * 
- * @author
+ * COMP3204: Computer Vision
+ * Coursework 3
+ * A Naive Bayes Classifier
+ *
+ * @author Dzhem Kavak (dtk1u19)
+ * @author Velimir Anastasov (vna1u19)
+ * @author Dzhani Daud (dsd1u19)
  */
 public class NaiveBayesClassifier extends MyClassifier {
 
@@ -40,9 +44,9 @@ public class NaiveBayesClassifier extends MyClassifier {
     /**
      * Class constructor.
      * 
-     * @param trainingData
-     * @param K
-     * @param sampleSize
+     * @param trainingData the training dataset
+     * @param K the number of clusters
+     * @param sampleSize the sample size
      */
     public NaiveBayesClassifier(GroupedDataset trainingData, int K, int sampleSize) {
         this.K = K;
@@ -72,11 +76,10 @@ public class NaiveBayesClassifier extends MyClassifier {
     }
 
     /**
-     * 
-     * 
-     * @param sample
-     * @param pdsift
-     * @return
+     * Run training on a dataset
+     *
+     * @param sample sample dataset
+     * @return the HardAssigner of the result
      */
     private HardAssigner<byte[], float[], IntFloatPair> trainQuantiser(
         Dataset<FImage> sample, PyramidDenseSIFT<FImage> pdsift) {
