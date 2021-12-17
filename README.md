@@ -55,9 +55,12 @@
 
 ### Performing Image Classification
 
-- All three of the implemented classifiers extend the `MyClassifier.java` class, which defines some basic methods that are common to all three classifiers.
-- One of these methods is `makeGuesses()`.
-  - ``` public ArrayList<Tuple<String, String>> makeGuesses(VFSListDataset<FImage> dataset) { ... } ```
+- All three of the implemented classifiers extend the `MyClassifier.java` class, which defines the basic structure and methods of all of the three classifiers.
+- One of these methods is `makeGuesses()`:
+
+```java
+public ArrayList<Tuple<String, String>> makeGuesses(VFSListDataset<FImage> dataset) { ... }
+```
 
 - After a classifier instance has been instantiated with training data, the `makeGuesses()` method can be used to annotate a set of unlabelled images.
 - The images are passed in as a `VFSListDataset`, and the method returns an `ArrayList` of `Tuple`s, where each tuple is a `String, String` pair, with the first element being the name of the image, and the second being the annotation of this image.
