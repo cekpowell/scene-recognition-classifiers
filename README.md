@@ -27,7 +27,7 @@
 
 ### Project Contents
 
-- Contained in the project are:
+- Contained in the project:
   - Three directories:
     - `Run1` : Contains the implementation of the first classifier (K-Nearest Neighbour Classifier). 
     - `Run2` : Contains the implementation of the second classifier (Linear Classifiers).
@@ -37,6 +37,8 @@
   -  The following `java` files:
     - `App.java` : Program used to evaluate the performance of each classifier, and run it on the provided testing data.
     - `MyClassifier.java` and `Tuple.java` : Helper classes for the classifier implementations.
+
+  - A
 
 
 ---
