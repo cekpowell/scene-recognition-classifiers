@@ -27,15 +27,18 @@
 
 ### Project Contents
 
-- Three directories:
+### Source Code
+
+- **Three directories**:
   - `Run1` : Contains the implementation of the first classifier (K-Nearest Neighbour Classifier). 
   - `Run2` : Contains the implementation of the second classifier (Linear Classifiers).
   - `Run3` : Contains the implementation of the third classifier (best possible classifier).
   - Each directory contains one file for the classifier used in the run, and one file for the feature extractor.
-
--  The following `java` files:
+-  **The following `java` files**:
   - `App.java` : Program used to evaluate the performance of each classifier, and run it on the provided testing data.
   - `MyClassifier.java` and `Tuple.java` : Helper classes for the classifier implementations.
+
+### Documentation
 
 - `Documentation.pdf` : A description of the group's implementation of all three classifiers.
 
