@@ -27,7 +27,7 @@
 
 ### Project Contents
 
-### Source Code
+#### Source Code
 
 - **Three directories**:
   - `Run1` : Contains the implementation of the first classifier (K-Nearest Neighbour Classifier). 
@@ -38,7 +38,7 @@
   - `App.java` : Program used to evaluate the performance of each classifier, and run it on the provided testing data.
   - `MyClassifier.java` and `Tuple.java` : Helper classes for the classifier implementations.
 
-### Documentation
+#### Documentation
 
 - `Documentation.pdf` : A description of the group's implementation of all three classifiers.
 
