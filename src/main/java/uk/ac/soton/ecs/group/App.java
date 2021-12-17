@@ -64,6 +64,9 @@ public class App {
 
         /**
          * Comment out 'App.runX() calls to run only certain classifiers.'
+         * 
+         * Use 'true' or 'false' with each call to decide if you evaluate the classifier (true),
+         * or just run it on the testing dataset (false).
          */
 
         // RUN 1 //
@@ -72,7 +75,7 @@ public class App {
         System.out.println("## RUN 1 ##");
         System.out.println();
 
-        App.run1(trainingData, testingData, run1Filename, true);
+        App.run1(trainingData, testingData, run1Filename, false);
 
         // RUN 2 //
 
@@ -80,7 +83,7 @@ public class App {
         System.out.println("## RUN 2 ##");
         System.out.println();
 
-        App.run2(trainingData, testingData, run2Filename, true);
+        App.run2(trainingData, testingData, run2Filename, false);
 
         // RUN 3 //
 
@@ -88,7 +91,7 @@ public class App {
         System.out.println("## RUN 3 ##");
         System.out.println();
 
-        App.run3(trainingData, testingData, run3Filename, true);
+        App.run3(trainingData, testingData, run3Filename, false);
     }
 
     ///////////////////////////
@@ -179,8 +182,8 @@ public class App {
 
         if(evaluate){
             System.out.println("Evaluating classifier performance with parameters : "
-                    + "\n\tTraining Number : " + trainingNum
-                    + "\n\tTesting Number : " + testingNum);
+                                + "\n\tTraining Number : " + trainingNum
+                                + "\n\tTesting Number : " + testingNum);
 
             GroupedRandomSplitter<String, FImage> splits = new GroupedRandomSplitter<>(trainingData, trainingNum, 0, testingNum);
 
