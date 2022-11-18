@@ -1,4 +1,4 @@
-# Scene Recognition
+# Scene Recognition Classifiers
 ## COMP3204: Computer Vision
 ---
 ## Contents
